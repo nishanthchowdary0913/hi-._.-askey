@@ -49,7 +49,11 @@ app.post('/api/chat', async (req, res) => {
 app.get('/api/health', (_req, res) => res.json({ status: 'ok', app: 'Hi Askey' }));
 
 async function start() {
-  const vite = await createViteServer({ server: { middlewareMode: true }, appType: 'spa' });
+  // Render must receive traffic on one port; disable Vite HMR's extra websocket port.
+  const vite = await createViteServer({
+    server: { middlewareMode: true, hmr: false },
+    appType: 'spa',
+  });
   app.use(vite.middlewares);
   const port = Number(process.env.PORT || 3000);
   app.listen(port, '0.0.0.0', () => console.log(`Hi Askey running at http://localhost:${port}`));
