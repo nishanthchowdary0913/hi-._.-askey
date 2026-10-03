@@ -1,0 +1,52 @@
+@import "tailwindcss";
+@source "./**/*.{js,jsx,ts,tsx}";
+
+@layer base {
+  :root {
+    --smu-navy: #0B2341;
+    --smu-dark: #061325;
+    --smu-card: #0a1d36;
+    --smu-gold: #C59B27;
+    --smu-border: #1E3A5F;
+  }
+}
+
+/* Subtle radial glow background */
+.smu-glow-bg {
+  background: radial-gradient(circle at 50% 15%, rgba(20, 52, 92, 0.45) 0%, rgba(6, 19, 37, 1) 75%);
+}
+
+.smu-glow-bg-light {
+  background: radial-gradient(circle at 50% 10%, rgba(219, 234, 254, 0.6) 0%, rgba(248, 250, 252, 1) 85%);
+}
+
+/* Fine gold border highlight */
+.gold-glow-border {
+  border: 1px solid rgba(197, 155, 39, 0.32);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6), 0 0 18px 0 rgba(197, 155, 39, 0.12);
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(6, 19, 37, 0.6);
+}
+::-webkit-scrollbar-thumb {
+  background: #1e3a5f;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c59b27;
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.02); }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 3s infinite ease-in-out;
+}

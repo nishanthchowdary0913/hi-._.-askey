@@ -40,14 +40,13 @@ Thumbs.db
 Desktop.ini
 
 
-Do not ignore:
-
-src/
-data/raw/
-data/processed/college_faq_metadata.json
-ui/src/
-ui/package.json
-ui/package-lock.json
+# These project files must remain tracked:
+!src/
+!data/raw/
+!data/processed/college_faq_metadata.json
+!ui/src/
+!ui/package.json
+!ui/package-lock.json
 
 
 ui-old-backup/
