@@ -1,0 +1,52 @@
+# Python virtual environments
+.venv/
+.venv312/
+venv/
+env/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Node.js dependencies and build output
+ui/node_modules/
+ui/dist/
+ui/.vite/
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+ui/.env
+ui/.env.*
+!ui/.env.example
+
+# Local Qdrant database and generated vector files
+data/processed/qdrant_db/
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+
+# Editor and operating-system files
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+
+Do not ignore:
+
+src/
+data/raw/
+data/processed/college_faq_metadata.json
+ui/src/
+ui/package.json
+ui/package-lock.json
+
+

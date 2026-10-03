@@ -1,0 +1,6 @@
+{
+  "name": "Hi ._. Askey! - Saint Mary's University AI Assistant",
+  "description": "Official Saint Mary's University Knowledge Base RAG Assistant (Hi ._. Askey) providing verified campus catalog, courses, banner portal, library, and student support data.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
