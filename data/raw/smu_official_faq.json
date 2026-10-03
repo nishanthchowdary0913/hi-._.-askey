@@ -1,0 +1,128 @@
+[
+  {
+    "question": "What is the MSc in Computing and Data Analytics program?",
+    "answer": "The MSc in Computing and Data Analytics is a 16-month professional master's program delivered over four terms. It combines eight months of practical coursework with eight months of paid work experience and focuses on AI, machine learning, data analytics, software development, and big data governance.",
+    "category": "courses",
+    "department": "graduate_studies",
+    "source_url": "https://www.smu.ca/academics/msc-in-computing-and-data-analytics.html"
+  },
+  {
+    "question": "What are the admission requirements for the MSc in Computing and Data Analytics?",
+    "answer": "Applicants normally need a four-year Bachelor of Science in Computing Science degree or an equivalent quantitative degree. The application requires an online form and $125 processing fee, transcripts and grading scale, a letter of intent, a CV, three recommendation forms, applicable English-language requirements, and a successful technical interview.",
+    "category": "admissions",
+    "department": "graduate_studies",
+    "source_url": "https://www.smu.ca/academics/msc-in-computing-and-data-analytics.html"
+  },
+  {
+    "question": "When is the application deadline for the MSc in Computing and Data Analytics Fall 2027 cohort?",
+    "answer": "For the September 2027 cohort, the online application and application fee are due by May 1, 2027. All required documents must be received by May 31, 2027. Applications can close earlier if the program reaches capacity.",
+    "category": "admissions",
+    "department": "graduate_studies",
+    "source_url": "https://www.smu.ca/academics/msc-in-computing-and-data-analytics.html"
+  },
+  {
+    "question": "How much are tuition and fees for the MSc in Computing and Data Analytics?",
+    "answer": "Estimated MSc CDA tuition and fees are $22,000 for Canadian students and $42,000 for international students. Payments are made in four instalments at the beginning of each term.",
+    "category": "fees",
+    "department": "graduate_studies",
+    "source_url": "https://www.smu.ca/academics/msc-in-computing-and-data-analytics.html"
+  },
+  {
+    "question": "What is the BSc in Computing Science and Business Administration?",
+    "answer": "It is an interdisciplinary four-year degree that combines Computing Science courses from the Department of Mathematics and Computing Science with courses from the Sobey School of Business. Students may enter co-op if they meet the progression requirements.",
+    "category": "courses",
+    "department": "mathematics_computing_science",
+    "source_url": "https://www.smu.ca/future-students/bsc-programs/computing-science-business-administration.html"
+  },
+  {
+    "question": "Does Saint Mary's offer Artificial Intelligence courses in Computing Science and Business Administration?",
+    "answer": "Yes. The program lists Artificial Intelligence as a sample course. Its topics include problem solving, searching, game playing, genetic algorithms, learning, neural networks, natural language processing, vision, knowledge representation, planning, and robotics.",
+    "category": "courses",
+    "department": "mathematics_computing_science",
+    "source_url": "https://www.smu.ca/future-students/bsc-programs/computing-science-business-administration.html"
+  },
+  {
+    "question": "What Computing Science degree options are available at Saint Mary's University?",
+    "answer": "Students can pursue a traditional Computing Science degree with a minor, concentration, major, or honours option, or a Computing Science and Business Administration major. Both degree paths have a co-op option. A Certificate in Computing and Data Analytics is also available.",
+    "category": "courses",
+    "department": "mathematics_computing_science",
+    "source_url": "https://smu-ca-public.courseleaf.com/undergraduate/programs/computing-science/"
+  },
+  {
+    "question": "Is the Computing Science program accredited at Saint Mary's University?",
+    "answer": "The Computing Science major and honours programs are accredited by the Computer Science Accreditation Council of the Canadian Information Processing Society (CIPS).",
+    "category": "courses",
+    "department": "mathematics_computing_science",
+    "source_url": "https://smu-ca-public.courseleaf.com/undergraduate/programs/computing-science/"
+  },
+  {
+    "question": "What are the 2026-2027 undergraduate tuition rates for Science and Engineering courses?",
+    "answer": "For each half-credit Science and Engineering course, the 2026-2027 tuition rate is $892.70 for Nova Scotia Canadian or permanent-resident students and $1,021.00 for out-of-province Canadian or permanent-resident students. International rates depend on the student's start year; the 2026-2027 rate is $3,334.00.",
+    "category": "fees",
+    "department": "general",
+    "source_url": "https://www.smu.ca/academics/undergraduate-tuition-and-fees.html"
+  },
+  {
+    "question": "What are the 2026-2027 undergraduate ancillary fees?",
+    "answer": "Ancillary fees total $615.00 per term for full-time students taking more than nine credit hours per semester and $369.00 per term for part-time students taking fewer than nine credit hours. They are applied to the student account each term based on credit hours.",
+    "category": "fees",
+    "department": "general",
+    "source_url": "https://www.smu.ca/academics/undergraduate-tuition-and-fees.html"
+  },
+  {
+    "question": "What are the 2026-2027 SMUSA and U-Pass student fees?",
+    "answer": "The full-time SMUSA student fee is $211.50 per academic year, or $105.75 per term. The full-time U-Pass bus fee is $184.00 per academic year, or $92.00 per term. Part-time students pay an $85.00 SMUSA fee and do not pay a U-Pass fee.",
+    "category": "transport",
+    "department": "general",
+    "source_url": "https://www.smu.ca/academics/undergraduate-tuition-and-fees.html"
+  },
+  {
+    "question": "What are the undergraduate application and admission deposit fees?",
+    "answer": "The domestic undergraduate application fee is $65.00 and the international undergraduate application fee is $100.00. The undergraduate admission deposit is $500 for domestic students and $3,000 for international students.",
+    "category": "admissions",
+    "department": "general",
+    "source_url": "https://www.smu.ca/academics/undergraduate-tuition-and-fees.html"
+  },
+  {
+    "question": "How can I find Saint Mary's University course offerings for a specific term?",
+    "answer": "The Academic Calendar provides approved course descriptions and program requirements. To see which courses are offered at a specific time, consult the Academic Timetable on Saint Mary's University's website.",
+    "category": "courses",
+    "department": "general",
+    "source_url": "https://smu-ca-public.courseleaf.com/undergraduate/"
+  },
+  {
+    "question": "What information does the Saint Mary's University Academic Calendar provide?",
+    "answer": "The Academic Calendar is the University's official statement for the academic year. It includes academic programs, course descriptions, admission requirements, regulations, degree requirements, and the Calendar of Events for registration, graduation, and holiday timelines.",
+    "category": "academic_calendar",
+    "department": "general",
+    "source_url": "https://smu-ca-public.courseleaf.com/undergraduate/"
+  },
+  {
+    "question": "Where can I find the 2026-2027 Saint Mary's University Academic Calendar?",
+    "answer": "The official online 2026-2027 Undergraduate Calendar is available through Saint Mary's University's CourseLeaf Academic Calendar website. It is effective from September 1, 2026 to August 31, 2027.",
+    "category": "academic_calendar",
+    "department": "general",
+    "source_url": "https://smu-ca-public.courseleaf.com/undergraduate/"
+  },
+  {
+    "question": "How can I estimate the cost of a term at Saint Mary's University?",
+    "answer": "Saint Mary's University provides a tuition and fees calculator to help students estimate the cost of a term.",
+    "category": "fees",
+    "department": "general",
+    "source_url": "https://www.smu.ca/future-students/moneymatters/tuitionandfees/"
+  },
+  {
+    "question": "What degree options are available in the Saint Mary's University Computing Science program?",
+    "answer": "Saint Mary's offers a nationally accredited Computing Science degree as a major or honours degree, either on its own or as a double major or honours degree with Mathematics or another field of science. Students may also pursue co-op or undergraduate research opportunities.",
+    "category": "courses",
+    "department": "mathematics_computing_science",
+    "source_url": "https://www.smu.ca/future-students/bsc-programs/computing-science-program.html"
+  },
+  {
+    "question": "What Artificial Intelligence topics are covered in the Saint Mary's Computing Science program?",
+    "answer": "The program lists Artificial Intelligence as a sample course covering problem solving, searching, game playing, genetic algorithms, learning, neural networks, natural language processing, vision, knowledge representation, logic, expert systems, reasoning under uncertainty, fuzzy sets, planning, and robotics.",
+    "category": "courses",
+    "department": "mathematics_computing_science",
+    "source_url": "https://www.smu.ca/future-students/bsc-programs/computing-science-program.html"
+  }
+]
