@@ -104,24 +104,14 @@ export default function App() {
       setMessages((prev) => [...prev, botMessage]);
     } catch (err) {
       console.error('Chat error:', err);
-      // Fallback message to guarantee seamless UX
+      // Never invent an answer when the cloud RAG endpoint is unavailable.
       const fallbackBotMessage: ChatMessageItem = {
         id: `bot-${Date.now()}`,
         role: 'assistant',
-        content: `### Saint Mary's University Grounded Assistant\n\nI encountered a network delay communicating with the knowledge engine, but here is the official campus resource information for **"${text}"**:\n\n* **Self-Service Banner & Transcripts:** Available at [smu.ca/banner](https://smu.ca) with your s-number.\n* **IT Support:** Contact the IT Help Desk in Atrium 102 (phone: **902-496-8111**, email: \`helpdesk@smu.ca\`).\n* **Student Records:** Contact the Service Centre in McNally Main 108 (\`service.centre@smu.ca\`).`,
+        content: 'I could not connect to the SMU knowledge engine. Please try again shortly.',
         timestamp: `Today, ${userTimestamp}`,
-        confidence: 0.92,
-        sources: [
-          {
-            title: "Saint Mary's University Direct Directory",
-            url: "https://smu.ca",
-            type: "Campus Directory",
-          },
-        ],
-        suggestedFollowUps: [
-          'How do I access Self-Service Banner?',
-          'Where is the Patrick Power Library?',
-        ],
+        confidence: 0,
+        sources: [],
       };
       setMessages((prev) => [...prev, fallbackBotMessage]);
     } finally {
