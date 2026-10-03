@@ -1,24 +1,25 @@
-"""JSON API adapter for the College Bot Qdrant/Ollama RAG pipeline."""
+"""JSON API adapter for Hi Askey using Gemini and Qdrant Cloud."""
 
 import json
+import os
 import re
 import sys
-from pathlib import Path
 
-import ollama
+from dotenv import load_dotenv
+from google import genai
+from google.genai import types
 from qdrant_client import QdrantClient
 from qdrant_client.models import FieldCondition, Filter, MatchValue
 
+load_dotenv()
 
-ROOT = Path(__file__).resolve().parents[1]
-QDRANT_PATH = str(ROOT / "data" / "processed" / "qdrant_db")
 COLLECTION_NAME = "college_knowledge"
-EMBEDDING_MODEL = "nomic-embed-text"
-LLM_MODEL = "llama3.2:3b"
+EMBEDDING_MODEL = "gemini-embedding-001"
+ANSWER_MODEL = "gemini-2.5-flash"
+MIN_RELEVANCE_SCORE = 0.55
 
 
 def normalize_query(text: str) -> str:
-    normalized = text.casefold()
     replacements = {
         "scholorship": "scholarship",
         "scholorships": "scholarships",
@@ -32,6 +33,7 @@ def normalize_query(text: str) -> str:
         "how do i go to campus": "directions to Saint Mary's University campus public transit",
         "travel to campus": "directions to Saint Mary's University campus public transit",
     }
+    normalized = text.casefold()
     for old, new in replacements.items():
         normalized = normalized.replace(old, new)
     return normalized
@@ -57,9 +59,25 @@ def keyword_score(query_words: set[str], document: str) -> float:
     return sum(word in document_words for word in query_words) / len(query_words)
 
 
+def is_smu_record(item) -> bool:
+    payload = item.payload or {}
+    source = str(payload.get("source", "")).casefold()
+    source_url = str(payload.get("source_url", "")).casefold()
+    return (
+        source in {"smu_faqdataset", "smu_website"}
+        or "smu.ca" in source_url
+        or "courseleaf.com" in source_url
+        or "smu.brightspace.com" in source_url
+        or "ppm.smu.ca" in source_url
+    )
+
+
 def answer_question(question: str, category: str = "") -> dict:
     normalized = normalize_query(question)
-    expanded = f"{question}. Search meaning: {normalized}. Use equivalent natural-language terms."
+    expanded = (
+        f"{question}. Search meaning: {normalized}. "
+        "Interpret natural language, spelling mistakes, and equivalent words."
+    )
 
     category_aliases = {
         "scholarship": "scholarships", "scholarships": "scholarships",
@@ -71,85 +89,87 @@ def answer_question(question: str, category: str = "") -> dict:
     category_value = category_aliases.get(category.casefold())
     query_filter = None
     if category_value:
-        query_filter = Filter(must=[FieldCondition(key="category", match=MatchValue(value=category_value))])
+        query_filter = Filter(
+            must=[FieldCondition(key="category", match=MatchValue(value=category_value))]
+        )
 
-    client = QdrantClient(path=QDRANT_PATH)
+    gemini = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+    qdrant = QdrantClient(
+        url=os.environ["QDRANT_URL"],
+        api_key=os.environ["QDRANT_API_KEY"],
+        timeout=120,
+    )
     try:
-        vector = ollama.embeddings(model=EMBEDDING_MODEL, prompt=expanded)["embedding"]
-        results = client.query_points(
+        embedding = gemini.models.embed_content(
+            model=EMBEDDING_MODEL,
+            contents=expanded,
+            config=types.EmbedContentConfig(
+                task_type="RETRIEVAL_QUERY",
+                output_dimensionality=768,
+            ),
+        )
+        vector = embedding.embeddings[0].values
+        results = qdrant.query_points(
             collection_name=COLLECTION_NAME,
             query=vector,
             query_filter=query_filter,
             limit=10,
         ).points
-
-        # Never allow the placeholder Sree Venkateswara record or any other
-        # non-SMU record to answer an SMU question.
-        def is_smu_record(item):
-            payload = item.payload
-            source = str(payload.get("source", "")).casefold()
-            source_url = str(payload.get("source_url", "")).casefold()
-            return (
-                source in {"smu_faqdataset", "smu_website"}
-                or "smu.ca" in source_url
-                or "courseleaf.com" in source_url
-                or "smu.brightspace.com" in source_url
-                or "ppm.smu.ca" in source_url
-            )
-
         results = [item for item in results if is_smu_record(item)]
+
         query_words = keywords(normalized)
         ranked = []
         for item in results:
-            question_text = item.payload.get("question", "")
-            answer_text = item.payload.get("answer", "")
-            score = item.score * 0.85 + keyword_score(query_words, f"{question_text} {answer_text}") * 0.15
+            payload = item.payload or {}
+            document = f"{payload.get('question', '')} {payload.get('answer', '')}"
+            score = item.score * 0.85 + keyword_score(query_words, document) * 0.15
             ranked.append((score, item))
         ranked.sort(key=lambda pair: pair[0], reverse=True)
-        relevant = [item for score, item in ranked if item.score >= 0.55][:3]
+        relevant = [item for _, item in ranked if item.score >= MIN_RELEVANCE_SCORE][:3]
 
         if not relevant:
             return {
-                "response": "I couldn't find reliable information about that in the current knowledge base.",
+                "response": "I don't have that information in the current knowledge base.",
                 "confidence": 0.0,
                 "sources": [],
                 "grounded": True,
             }
 
         context = "\n\n".join(
-            f"Source question: {item.payload.get('question', '')}\nSource answer: {item.payload.get('answer', '')}"
-            for item in relevant
+            f"[Source {index}]\n"
+            f"Question: {(item.payload or {}).get('question', '')}\n"
+            f"Answer: {(item.payload or {}).get('answer', '')}"
+            for index, item in enumerate(relevant, start=1)
         )
-        response = ollama.chat(
-            model=LLM_MODEL,
-            messages=[
-                {
-                    "role": "system",
-                    "content": (
-                        "You are Hi Askey, a grounded university assistant. Answer only from the supplied sources. "
-                        "If the sources do not answer the question, say that the information is unavailable. "
-                        "Do not invent facts, dates, prices, hours, policies, or links. Keep the answer concise."
-                    ),
-                },
-                {"role": "user", "content": f"Sources:\n{context}\n\nQuestion: {question}"},
-            ],
-        )
-        sources = [
-            {
-                "title": item.payload.get("question", "Knowledge-base source"),
-                "url": item.payload.get("source_url", "https://www.smu.ca/"),
-                "type": item.payload.get("category", "University information"),
-            }
-            for item in relevant
-        ]
+        prompt = f"""You are Hi Askey, the Saint Mary's University information assistant.
+Answer only from the supplied sources. Do not invent facts, dates, prices, policies,
+hours, transportation details, course information, or links. If the sources do not
+answer the question, say exactly: I don't have that information in the current
+knowledge base. Give a concise, helpful answer in natural English.
+
+Sources:
+{context}
+
+User question: {question}
+"""
+        generated = gemini.models.generate_content(model=ANSWER_MODEL, contents=prompt)
+        response_text = generated.text or "I don't have that information in the current knowledge base."
+        sources = []
+        for item in relevant:
+            payload = item.payload or {}
+            sources.append({
+                "title": payload.get("question", "Knowledge-base source"),
+                "url": payload.get("source_url", "https://www.smu.ca/"),
+                "type": payload.get("category", "University information"),
+            })
         return {
-            "response": response["message"]["content"],
+            "response": response_text,
             "confidence": 0.90,
             "sources": sources,
             "grounded": True,
         }
     finally:
-        client.close()
+        qdrant.close()
 
 
 def main() -> None:
