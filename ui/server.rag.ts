@@ -12,7 +12,10 @@ app.use(express.json());
 function runRag(request: { message: string; category?: string }) {
   return new Promise<Record<string, unknown>>((resolve, reject) => {
     const projectRoot = path.resolve(__dirname, '..');
-    const python = process.env.PYTHON || path.join(projectRoot, '.venv312', 'Scripts', 'python.exe');
+    const localPython = process.platform === 'win32'
+      ? path.join(projectRoot, '.venv312', 'Scripts', 'python.exe')
+      : 'python3';
+    const python = process.env.PYTHON || localPython;
     const ragScript = path.join(__dirname, 'rag_api.py');
     const child = spawn(python, [ragScript], { cwd: projectRoot, windowsHide: true });
     let stdout = '';
